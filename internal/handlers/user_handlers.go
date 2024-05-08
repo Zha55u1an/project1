@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_project/internal/models"
-	"go_project/pkg/utils"
 	"gorm.io/gorm"
 	"net/http"
 )
@@ -44,29 +43,6 @@ func (repo *UserRepository) GetUserByID(c *gin.Context) {
 }
 
 // CreateUser обрабатывает POST запрос для создания нового пользователя
-func (repo *UserRepository) CreateUser(c *gin.Context) {
-	var user models.User
-	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	hashed, err := utils.PasswordHash(user.Password)
-
-	if err != nil {
-		fmt.Errorf("Hashing password error %w\n", err)
-		return
-	}
-
-	user.Password = hashed
-
-	result := repo.db.Create(&user)
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
-	}
-	c.JSON(http.StatusCreated, user)
-}
 
 // UpdateUser обрабатывает PUT запрос для обновления информации о пользователе
 func (repo *UserRepository) UpdateUser(c *gin.Context) {

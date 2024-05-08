@@ -7,4 +7,5 @@ const (
 	Password = "Zhasulan2004"
 	Dbname   = "ucms"
 	TokenKey = "servertoken"
+	SSLMode  = "disable"
 )
