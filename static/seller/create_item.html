@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="/seller/static/seller-base.css">
+    <link rel="stylesheet" href="/seller/static/create_item.css">
+</head>
+<body>
+    {{template "seller-navbar" .}}
+
+    <div class="product-page-container">
+        <div id="message" style="display:none; padding: 10px; border-radius: 5px; font-size: 16px;">
+            <!-- Сообщения будут выводиться сюда -->
+        </div>
+
+        <form action="/seller/products" method="POST" enctype="multipart/form-data" class="product-form">
+            <div class="form-section left-panel">
+                <div class="image-upload">
+                    <div class="image-placeholder" id="placeholder-box">
+                        <img src="/static/images/placeholder-image.png" alt="Placeholder" class="placeholder-image">
+                        <p>Drag & drop or click to upload</p>
+                        <input type="file" name="images" class="file-upload" accept="image/*" id="image-upload" style="display: none;">
+                        <button type="button" class="upload-button" id="upload-button">Choose File</button>
+                    </div>
+                </div>
+
+                <div class="thumbnail-container">
+                    <div id="thumbnails">
+                        <!-- Thumbnails of selected images will appear here -->
+                    </div>
+                    <label for="image-upload" class="add-thumbnail">
+                        <span>+</span>
+                    </label>
+                    <input type="file" name="images" class="file-upload" accept="image/*" style="display: none;" multiple>
+                </div>
+            </div>
+
+            <div class="form-section right-panel">
+                <h2>Main Information</h2>
+
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter product name">
+
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" required placeholder="Enter product category">
+
+                <label for="price">Price (₸)</label>
+                <input type="number" id="price" name="price" required placeholder="Enter product price">
+
+                <label for="is_available">Availability</label>
+                <select id="is_available" name="is_available" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5" required placeholder="Enter product description"></textarea>
+
+                <button type="submit" class="submit-button">Create Product</button>
+            </div>
+        </form>
+    </div>
+
+    {{template "seller-footer" .}}
+
+    <script src="/seller/static/create_item.js"></script>
+</body>
+</html>

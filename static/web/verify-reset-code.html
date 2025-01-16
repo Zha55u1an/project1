@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/verify-reset-code.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container">
+        <h1>Verify Your Email</h1>
+        <p>We have sent a verification code to your email: <strong>{{.email}}</strong>.</p>
+        <p>Please check your inbox and enter the code below:</p>
+
+        <!-- Форма для ввода кода верификации -->
+        <form id="verifyForm">
+            <div class="form-group">
+                <label for="code">Verification Code:</label>
+                <input type="text" id="code" name="code" placeholder="Enter verification code" required />
+            </div>
+            <button type="submit" class="btn">Verify</button>
+        </form>
+
+        <!-- Сообщение и кнопка для повторной отправки кода -->
+        <p id="resendMessage">
+            Didn't receive the code? You can resend it in <span id="timer">15</span> seconds.
+        </p>
+        <button id="resendCode" disabled>Resend Code</button>
+
+        <!-- Сообщение об ошибках или успехе -->
+        <div id="feedbackMessage" class="message"></div>
+    </div>
+
+    {{template "footer" .}}
+    <script src="/static/verify-reset-code.js"></script>
+</body>
+</html>

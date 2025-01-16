@@ -17,7 +17,6 @@ func NewCategoryRepository(db *gorm.DB) *CategoryRepository {
     return &CategoryRepository{db: db}
 }
 
-// GetAllCategories handles GET request to fetch all categories
 func (repo *CategoryRepository) GetAllCategories(c *gin.Context) {
     var categories []models.Category
     result := repo.db.Preload("Products").Find(&categories)
@@ -28,7 +27,6 @@ func (repo *CategoryRepository) GetAllCategories(c *gin.Context) {
     c.JSON(http.StatusOK, categories)
 }
 
-// GetCategoryByID handles GET request to fetch a category by ID
 func (repo *CategoryRepository) GetCategoryByID(c *gin.Context) {
     id := c.Param("id")
     var category []models.Category
@@ -40,7 +38,6 @@ func (repo *CategoryRepository) GetCategoryByID(c *gin.Context) {
     c.JSON(http.StatusOK, category)
 }
 
-// CreateCategory handles POST request to create a new category
 func (repo *CategoryRepository) CreateCategory(c *gin.Context) {
     var category models.Category
     if err := c.BindJSON(&category); err != nil {
@@ -55,7 +52,6 @@ func (repo *CategoryRepository) CreateCategory(c *gin.Context) {
     c.JSON(http.StatusCreated, category)
 }
 
-// UpdateCategory handles PUT request to update an existing category
 func (repo *CategoryRepository) UpdateCategory(c *gin.Context) {
     id := c.Param("id")
     var category models.Category
@@ -72,7 +68,6 @@ func (repo *CategoryRepository) UpdateCategory(c *gin.Context) {
     c.JSON(http.StatusOK, category)
 }
 
-// DeleteCategory handles DELETE request to delete a category by ID
 func (repo *CategoryRepository) DeleteCategory(c *gin.Context) {
     id := c.Param("id")
     result := repo.db.Delete(&models.Category{}, id)

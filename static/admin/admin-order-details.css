@@ -1,0 +1,123 @@
+/* Общие стили для страницы деталей заказа */
+.container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #333;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-top: 20px;
+    color: #333;
+}
+
+.order-summary {
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.order-summary p {
+    margin: 5px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* Для ячеек с товарами */
+td ul {
+    padding-left: 20px;
+}
+
+td ul li {
+    margin-bottom: 5px;
+}
+
+/* Общая сумма заказа */
+.order-total {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.order-total p {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Форма изменения статуса */
+form {
+    margin-top: 20px;
+}
+
+form select {
+    padding: 8px;
+    margin-right: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+    }
+
+    .order-summary,
+    .order-total {
+        font-size: 0.9rem;
+    }
+
+    form select,
+    form button {
+        font-size: 0.9rem;
+    }
+}

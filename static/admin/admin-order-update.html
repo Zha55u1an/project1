@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Update Order Status</title>
+    <link rel="stylesheet" href="/admin/static/admin-base.css">
+    <link rel="stylesheet" href="/admin/static/admin-order-update.css">
+</head>
+<body>
+    {{template "admin-navbar" .}} <!-- Шаблон для навигации -->
+
+    <div class="order-update">
+        <h2>Update Order #{{.Order.ID}}</h2>
+        <p><strong>Order Date:</strong> {{.Order.Date}} at {{.Order.Time}}</p>
+        <p><strong>Status:</strong> {{.Order.Status}}</p>
+    
+        <h3>Order Items</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Order.OrderItems}}
+                    <tr>
+                        <td>{{.Item.Name}}</td>
+                        <td>{{.Quantity}}</td>
+                        <td>{{.Price}}₸</td> <!-- Замените скобки на просто .Price -->
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="3">No items found</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+    
+        <h3>Update Status</h3>
+        <form method="POST" action="/admin/order-update/{{.Order.ID}}">
+            <select name="status" class="form-control">
+                <option value="pending" {{if eq .Order.Status "pending"}}selected{{end}}>Pending</option>
+                <option value="Shipped" {{if eq .Order.Status "completed"}}selected{{end}}>Shipped</option>
+                <option value="in transit" {{if eq .Order.Status "cancelled"}}selected{{end}}>In Transit</option>
+                <option value="delivered" {{if eq .Order.Status "cancelled"}}selected{{end}}>Delivered</option>
+
+            </select>
+            <button type="submit" class="btn btn-primary mt-3">Update Status</button>
+        </form>
+    </div>
+    
+
+    {{template "admin-footer" .}} <!-- Шаблон для подвала -->
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Order Details</title>
+    <link rel="stylesheet" href="/admin/static/admin-base.css">
+    <link rel="stylesheet" href="/admin/static/admin-order-details.css">
+</head>
+<body>
+    {{template "admin-navbar" .}} <!-- Шаблон для навигации -->
+
+    <div class="container">
+        <h1>Order Details</h1>
+
+        <div class="order-summary">
+            <h2>Order ID: {{.Order.ID}}</h2>
+            <p><strong>Status:</strong> {{.Order.Status}}</p>
+            <p><strong>Placed on:</strong> {{.Order.Date}} at {{.Order.Time}}</p>
+        </div>
+
+        <h2>Order Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Order.OrderItems}}
+                    <tr>
+                        <td>{{.Item.Name}}</td>
+                        <td>{{.Quantity}}</td>
+                        <td>{{.Price}}₸</td>
+                        <td>{{.Price .Quantity}}₸</td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="4">No items in this order</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <div class="order-total">
+            <p><strong>Total Amount:</strong> {{.Order.TotalAmount}}₸</p>
+        </div>
+
+        <!-- Change Status Form -->
+        <h3>Update Order Status</h3>
+        <form action="/admin/order-status/{{.Order.ID}}" method="POST">
+            <label for="status">Choose Status:</label>
+            <select id="status" name="status">
+                <option value="pending" {{if eq .Order.Status "pending"}}selected{{end}}>Pending</option>
+                <option value="completed" {{if eq .Order.Status "completed"}}selected{{end}}>Completed</option>
+                <option value="cancelled" {{if eq .Order.Status "cancelled"}}selected{{end}}>Cancelled</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Update Status</button>
+        </form>
+    </div>
+
+    {{template "admin-footer" .}} <!-- Шаблон для подвала -->
+</body>
+</html>

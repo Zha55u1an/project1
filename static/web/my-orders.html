@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/my-orders.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container">
+        <h1>My Orders</h1>
+
+        {{if .Orders}}
+        <div class="orders-table">
+            <div class="table-header">
+                <div class="table-cell">Order</div>
+                <div class="table-cell">Date</div>
+                <div class="table-cell">Status</div>
+                <div class="table-cell">Total</div>
+            </div>
+            {{range .Orders}}
+            <div class="table-row" onclick="window.location.href='/order/{{.ID}}'">
+                <div class="table-cell">{{.ID}}</div>
+                <div class="table-cell">{{.CreatedAt}}</div>
+                <div class="table-cell">{{.Status}}</div>
+                <div class="table-cell">{{.Total}}₸</div>
+            </div>
+            {{end}}
+        </div>
+        {{else}}
+        <p>No orders found.</p>
+        {{end}}
+    </div>
+
+    {{template "footer" .}}
+<script src="/static/script.js"></script>
+
+</body>
+</html>

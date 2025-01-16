@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Item.Name}}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/item.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container">
+        <!-- Заголовок товара -->
+        <h1 class="item-title">{{.Item.Name}}</h1>
+
+        <!-- Основной контейнер -->
+        <div class="item-page">
+            <!-- Левый контейнер: Миниатюры -->
+            <div class="left-container">
+                <div class="thumbnails">
+                    {{range .Images}}
+                        <img 
+                            src="{{.ImagePath}}" 
+                            alt="Thumbnail" 
+                            class="thumbnail" 
+                            onclick="updateMainImage('{{.ImagePath}}')">
+                    {{end}}
+                </div>
+            </div>
+        
+            <!-- Правый контейнер: Главное изображение -->
+            <div class="right-container">
+                <div class="main-image-container">
+                    {{if .Images}}
+                        <!-- Если изображения в ItemImage, берем первое изображение -->
+                        <img 
+                            id="main-image" 
+                            src="{{(index .Images 0).ImagePath}}" 
+                            alt="{{.Item.Name}}" 
+                            class="main-image">
+                    {{else}}
+                        <!-- Если изображений нет, показываем изображение по умолчанию -->
+                        <img 
+                            id="main-image" 
+                            src="/static/no-image.png" 
+                            alt="No Image Available" 
+                            class="main-image">
+                    {{end}}
+                </div>
+                
+            </div>
+
+            <!-- Информация о товаре -->
+            <div class="item-details">
+                <p class="item-description">{{.Item.Description}}</p>
+                <p class="item-price">{{.Item.Price}}₸</p>
+                <button class="btn-add-to-cart" data-item-id="{{.ID}}">Add to Cart</button>
+            </div>
+            </div>
+        
+    </div>
+
+            <!-- Средний рейтинг -->
+        <div class="average-rating">
+            <h2>Average Rating: {{printf "%.1f" .AverageRating}} / 5</h2>
+        </div>
+
+        <!-- Блок отзывов -->
+        <div class="reviews-container">
+            <h3>Customer Reviews</h3>
+            {{if .Reviews}}
+                {{range .Reviews}}
+                <div class="review-card">
+                    <p class="review-user"><strong>User:</strong> {{.User.Username}}</p>
+                    <!-- Рейтинг звезд -->
+                    <div class="rating-stars" data-rating="{{.Rating}}"></div>
+                    <p class="review-comment">{{.Comment}}</p>
+                </div>
+                {{end}}
+            {{else}}
+                <p>No reviews yet. Be the first to review this product!</p>
+            {{end}}
+        </div>
+        
+        
+
+
+    {{template "footer" .}}
+    <script src="/static/script.js"></script>
+    <script src="/static/item.js"></script>
+    <script src="/static/home.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- Шапка сайта для админов -->
+{{define "admin-navbar"}}
+<header class="admin-header">
+    <div class="admin-logo">
+        <a href="/admin" style="text-decoration: none; color: inherit;">
+            <h1>Perfect Admin</h1>
+        </a>
+    </div>
+    <nav class="admin-nav">
+        <ul>
+            <li><a href="/admin">Dashboard</a></li>
+            <li><a href="/admin/orders">Orders</a></li>
+            <li><a href="/admin/products">Products</a></li>
+            <li><a href="/admin-users">Users</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+{{end}}
+
+<!-- Футер для админов -->
+{{define "admin-footer"}}
+<footer class="admin-footer">
+    <p>&copy; 2024 Perfect Admin. All Rights Reserved.</p>
+</footer>
+{{end}}

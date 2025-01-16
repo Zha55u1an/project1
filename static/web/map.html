@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбрать адрес доставки</title>
+    <link rel="stylesheet" href="/static/map.css">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=febf663c-17d1-47a2-b099-01090ea4588f&lang=ru_RU"></script>
+    <script src="/static/map.js" defer></script>
+</head>
+<body>
+    <button class="btn-back" onclick="goBack()">Close</button>
+
+    <!-- Контейнер для поиска -->
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="search-address" 
+            placeholder="Enter address to find the nearest pick-up point" 
+        />
+        <span id="clear-search" style="display:none;">×</span>
+        <button onclick="findNearestPoint()">Search</button>
+    </div>
+
+    <div class="container">
+        <!-- Список пунктов выдачи -->
+        <div id="sidebar"></div>
+
+        <!-- Карта -->
+        <div id="map"></div>
+    </div>
+</body>
+</html>

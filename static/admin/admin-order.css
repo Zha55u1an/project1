@@ -1,0 +1,110 @@
+/* Общие стили для страницы заказов */
+.container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* Стиль для ячеек с товарными позициями */
+td ul {
+    padding-left: 20px;
+}
+
+td ul li {
+    margin-bottom: 5px;
+}
+
+/* Стили для кнопок действий */
+.btn {
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-info {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0056b3;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+/* Стили для отображения "нет заказов" */
+td[colspan="5"] {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* Стиль для заголовков таблицы */
+th {
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+
+    td ul li {
+        font-size: 0.9rem;
+    }
+}

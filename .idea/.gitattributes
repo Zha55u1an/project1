@@ -1,0 +1,2 @@
+taskkill /IM git.exe /F
+* text=auto

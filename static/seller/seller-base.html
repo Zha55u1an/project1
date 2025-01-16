@@ -1,0 +1,25 @@
+<!-- Шапка сайта для админов -->
+{{define "seller-navbar"}}
+<header class="seller-header">
+    <div class="seller-logo">
+        <a href="/seller/dashboard" style="text-decoration: none; color: inherit;">
+            <h1>Perfect Seller</h1>
+        </a>
+    </div>
+    <nav class="seller-nav">
+        <ul>
+            <li><a href="/seller/dashboard">Dashboard</a></li>
+            <li><a href="/seller/orders">Orders</a></li>
+            <li><a href="/seller/products">Products</a></li>
+            <li><a href="/seller/users">Users</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+{{end}}
+
+{{define "seller-footer"}}
+<footer class="seller-footer">
+    <p>&copy; 2024 Perfect Seller. All Rights Reserved.</p>
+</footer>
+{{end}}

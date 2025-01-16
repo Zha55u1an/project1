@@ -5,7 +5,9 @@ package handlers
 import (
 	"fmt"
 	"go_project/internal/models"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -19,7 +21,15 @@ func NewItemRepository(db *gorm.DB) *ItemRepository {
 	return &ItemRepository{db: db}
 }
 
-// GetAllItems handles GET request to fetch all items
+type RecentlyViewedRepository struct {
+	db *gorm.DB
+}
+
+func NewRecentlyViewedRepository(db *gorm.DB) *RecentlyViewedRepository {
+	return &RecentlyViewedRepository{db: db}
+}
+
+
 func (repo *ItemRepository) GetAllItems(c *gin.Context) {
 	var items []models.Item
 	result := repo.db.Find(&items)
@@ -30,19 +40,90 @@ func (repo *ItemRepository) GetAllItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
-// GetItemByID handles GET request to fetch an item by ID
-func (repo *ItemRepository) GetItemByID(c *gin.Context) {
-	id := c.Param("id")
-	var item models.Item
-	result := repo.db.First(&item, id)
-	if result.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Item not found"})
-		return
-	}
-	c.JSON(http.StatusOK, item)
+func (repo *ItemRepository) GetItemByID(c *gin.Context, recentlyViewedRepo *RecentlyViewedRepository) {
+    id := c.Param("id")
+    var item models.Item
+    var images []models.ItemImage
+    var reviews []models.Review
+    var averageRating float64
+    var reviewCount int64
+
+    // Находим товар по ID
+    if err := repo.db.First(&item, id).Error; err != nil {
+        c.HTML(http.StatusNotFound, "error.html", gin.H{"error": "Item not found"})
+        return
+    }
+
+    // Добавляем товар в недавно просмотренные
+    if userID, exists := c.Get("userID"); exists {
+        err := recentlyViewedRepo.AddRecentlyViewed(userID.(uint), item.ID)
+        if err != nil {
+            log.Printf("Error adding recently viewed item: %v", err)
+        }
+    }
+
+    // Находим все изображения, связанные с товаром
+    repo.db.Where("item_id = ?", id).Find(&images)
+
+    // Получаем отзывы для товара
+    repo.db.Where("item_id = ?", id).Find(&reviews)
+
+    // Вычисляем средний рейтинг
+    repo.db.Model(&models.Review{}).Where("item_id = ?", id).Select("AVG(rating)").Scan(&averageRating)
+
+    // Подсчитываем количество отзывов
+    repo.db.Model(&models.Review{}).Where("item_id = ?", id).Count(&reviewCount)
+
+    // Логика для вычисления количества звезд
+    for i, review := range reviews {
+        reviews[i].FilledStars = review.Rating         // Заполненные звезды (по рейтингу)
+        reviews[i].RemainingStars = 5 - review.Rating // Оставшиеся звезды
+    }
+
+    // Передаем данные в шаблон
+    c.HTML(http.StatusOK, "item.html", gin.H{
+        "Item":          item,
+        "Images":        images,
+        "Reviews":       reviews,
+        "AverageRating": averageRating,
+        "ReviewCount":   reviewCount, // Количество отзывов
+    })
 }
 
-// CreateItem handles POST request to create a new item
+
+
+
+func (repo *RecentlyViewedRepository) AddRecentlyViewed(userID uint, itemID uint) error {
+    // Убедимся, что запись не дублируется
+    var existingItem models.RecentlyViewedItem
+    if err := repo.db.Where("user_id = ? AND item_id = ?", userID, itemID).First(&existingItem).Error; err == nil {
+        // Если запись уже существует, обновляем время просмотра
+        existingItem.ViewTime = time.Now()
+        if err := repo.db.Save(&existingItem).Error; err != nil {
+            log.Printf("Error updating recently viewed item: %v", err)
+            return err
+        }
+        return nil
+    }
+
+    // Если запись не существует, создаем новую
+    newRecentlyViewed := models.RecentlyViewedItem{
+        UserID:   userID,
+        ItemID:   itemID,
+        ViewTime: time.Now(),
+    }
+    if err := repo.db.Create(&newRecentlyViewed).Error; err != nil {
+        log.Printf("Error adding recently viewed item: %v", err)
+        return err
+    }
+
+    return nil
+}
+
+
+
+
+
 func (repo *ItemRepository) CreateItem(c *gin.Context) {
 	var item models.Item
 	if err := c.BindJSON(&item); err != nil {
@@ -50,7 +131,6 @@ func (repo *ItemRepository) CreateItem(c *gin.Context) {
 		return
 	}
 
-	// Поиск категории по имени (или создание, если она не существует)
 	var category models.Category
 	result := repo.db.Where("name = ?", item.Category.Name).First(&category)
 
@@ -63,10 +143,8 @@ func (repo *ItemRepository) CreateItem(c *gin.Context) {
 		return
 	}
 
-	// Связывание товара с найденной/созданной категорией
 	item.Category = &category
 
-	// Создание товара (включая связанную категорию)
 	result = repo.db.Create(&item)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
@@ -76,7 +154,6 @@ func (repo *ItemRepository) CreateItem(c *gin.Context) {
 	c.JSON(http.StatusCreated, item)
 }
 
-// UpdateItem handles PUT request to update an existing item
 func (repo *ItemRepository) UpdateItem(c *gin.Context) {
 	id := c.Param("id")
 	var item models.Item
@@ -93,7 +170,6 @@ func (repo *ItemRepository) UpdateItem(c *gin.Context) {
 	c.JSON(http.StatusOK, item)
 }
 
-// DeleteItem handles DELETE request to delete an item by ID
 func (repo *ItemRepository) DeleteItem(c *gin.Context) {
 	id := c.Param("id")
 	result := repo.db.Delete(&models.Item{}, id)

@@ -1,0 +1,70 @@
+#signupMessage {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.signup-section {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.signup-section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-signup {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-signup:hover {
+    background-color: #0056b3;
+}
+
+.login-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.password-field {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password svg {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+.toggle-password:hover svg {
+    color: #007BFF;
+}

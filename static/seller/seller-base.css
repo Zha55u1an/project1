@@ -1,0 +1,70 @@
+/* Общие стили для админ панели */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+}
+
+.seller-header {
+    background-color: #4169E1;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.seller-logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.seller-nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.seller-nav ul li {
+    margin-left: 20px;
+}
+
+.seller-nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.seller-nav ul li a:hover {
+    color: #1e90ff; /* Голубой цвет при наведении */
+}
+
+/* Футер для админ панели */
+.seller-footer {
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+/* Стили для активной ссылки */
+.seller-nav ul li a.active {
+    color: #1e90ff; /* Цвет для активной ссылки */
+    border-bottom: 2px solid #1e90ff;
+}
+
+/* Дополнительные стили */
+main {
+    margin: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/order-details.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container">
+        <h1>Order Details</h1>
+
+        <!-- Кнопка "Назад" -->
+        <div class="back-button-container">
+            <button class="back-button" onclick="window.location.href='/my-orders'">
+                ← Back to Orders
+            </button>
+        </div>
+
+        <!-- Информация о заказе -->
+        <div class="order-info">
+            <p><strong>Order ID:</strong> {{.Order.ID}}</p>
+            <p><strong>Date:</strong> {{.Order.Time}}, {{.Order.Date}}</p>
+            <p><strong>Status:</strong> {{.Order.Status}}</p>
+        </div>
+        
+
+        <!-- Статус отслеживания -->
+        <div class="order-status">
+            <h3>Order Tracking</h3>
+            <div class="tracking-container">
+                <!-- Order Created -->
+                <div class="tracking-step">
+                    <div class="step-icon {{if or (eq .Order.Status "created") (eq .Order.Status "shipped") (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed{{end}}">
+                        🛒
+                    </div>
+                    <p class="{{if or (eq .Order.Status "created") (eq .Order.Status "shipped") (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed-text{{end}}">Order Created</p>
+                </div>
+                <div class="line {{if or (eq .Order.Status "shipped") (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed-line{{end}}"></div>
+        
+                <!-- Shipped -->
+                <div class="tracking-step">
+                    <div class="step-icon {{if or (eq .Order.Status "shipped") (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed{{end}}">
+                        📦
+                    </div>
+                    <p class="{{if or (eq .Order.Status "shipped") (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed-text{{end}}">Shipped</p>
+                </div>
+                <div class="line {{if or (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed-line{{end}}"></div>
+        
+                <!-- In Transit -->
+                <div class="tracking-step">
+                    <div class="step-icon {{if or (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed{{end}}">
+                        🚚
+                    </div>
+                    <p class="{{if or (eq .Order.Status "in_transit") (eq .Order.Status "delivered")}}completed-text{{end}}">In Transit</p>
+                </div>
+                <div class="line {{if eq .Order.Status "delivered"}}completed-line{{end}}"></div>
+        
+                <!-- Delivered -->
+                <div class="tracking-step">
+                    <div class="step-icon {{if eq .Order.Status "delivered"}}completed{{end}}">
+                        🏠
+                    </div>
+                    <p class="{{if eq .Order.Status "delivered"}}completed-text{{end}}">Delivered</p>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+
+        <!-- Товары в заказе -->
+        <h3>Ordered Items</h3>
+        <div class="items-container">
+            {{range .Order.OrderItems}}
+            <div class="item-card">
+                <a href="/item/{{.ItemID}}">
+                    <img src="{{.Item.ImagePath}}" alt="{{.Item.Name}}" class="item-image">
+                </a>
+                <div class="item-details">
+                    <a href="/item/{{.ItemID}}" class="item-name">{{.Item.Name}}</a>
+                    <p>Quantity: {{.Quantity}}</p>
+                    <p>Price: {{.Price}}₸</p>
+        
+                    <!-- Кнопка для добавления отзыва, видна только если статус Delivered -->
+                    {{if eq $.Order.Status "delivered"}}
+                    <button class="review-button" onclick="openReviewModal('{{.ItemID}}', '{{.Item.Name}}')">
+                        Leave Review
+                    </button>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+        
+        <!-- Модальное окно для отзыва -->
+        <div id="review-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeReviewModal()">&times;</span>
+                <h2 id="review-item-name">Leave a Review</h2>
+        
+                <form id="review-form" onsubmit="submitReview(event)">
+                    <!-- Скрытый ID товара -->
+                    <input type="hidden" id="review-item-id" name="item_id">
+        
+                    <!-- Рейтинг звёздами -->
+                    <div class="rating-stars" id="star-container">
+                        <svg class="star" data-value="1" onclick="setRating(1)" onmouseover="hoverStars(1)" onmouseleave="resetStars()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path stroke="#000" stroke-width="0.5" d="M12 .587l3.668 7.425 8.207 1.192-5.938 5.814 1.401 8.165L12 18.896l-7.338 3.857 1.401-8.165-5.938-5.814 8.207-1.192z"/>
+                        </svg>
+                        <svg class="star" data-value="2" onclick="setRating(2)" onmouseover="hoverStars(2)" onmouseleave="resetStars()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path stroke="#000" stroke-width="0.5" d="M12 .587l3.668 7.425 8.207 1.192-5.938 5.814 1.401 8.165L12 18.896l-7.338 3.857 1.401-8.165-5.938-5.814 8.207-1.192z"/>
+                        </svg>
+                        <svg class="star" data-value="3" onclick="setRating(3)" onmouseover="hoverStars(3)" onmouseleave="resetStars()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path stroke="#000" stroke-width="0.5" d="M12 .587l3.668 7.425 8.207 1.192-5.938 5.814 1.401 8.165L12 18.896l-7.338 3.857 1.401-8.165-5.938-5.814 8.207-1.192z"/>
+                        </svg>
+                        <svg class="star" data-value="4" onclick="setRating(4)" onmouseover="hoverStars(4)" onmouseleave="resetStars()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path stroke="#000" stroke-width="0.5" d="M12 .587l3.668 7.425 8.207 1.192-5.938 5.814 1.401 8.165L12 18.896l-7.338 3.857 1.401-8.165-5.938-5.814 8.207-1.192z"/>
+                        </svg>
+                        <svg class="star" data-value="5" onclick="setRating(5)" onmouseover="hoverStars(5)" onmouseleave="resetStars()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path stroke="#000" stroke-width="0.5" d="M12 .587l3.668 7.425 8.207 1.192-5.938 5.814 1.401 8.165L12 18.896l-7.338 3.857 1.401-8.165-5.938-5.814 8.207-1.192z"/>
+                        </svg>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" value="0">
+        
+                    <!-- Поле для комментария -->
+                    <div class="comment">
+                        <label for="comment">Comment:</label>
+                        <textarea id="comment" name="comment" rows="4" required></textarea>
+                    </div>
+        
+                    <!-- Кнопка отправки -->
+                    <button type="submit">Submit Review</button>
+                </form>
+            </div>
+        </div>
+        
+        
+        
+        
+    </div>
+
+    {{template "footer" .}}
+    <script src="/static/order-details.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

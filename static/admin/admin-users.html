@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Users</title>
+    <link rel="stylesheet" href="/admin/static/admin-base.css">
+    <link rel="stylesheet" href="/admin/static/admin-users.css">
+</head>
+<body>
+    {{template "admin-navbar" .}} <!-- Шаблон для навигации -->
+
+    <div class="container">
+        <h1>Users</h1>
+
+        <!-- Раздел для покупателей -->
+        <h2>Buyers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Buyers}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.Username}}</td>
+                        <td>{{.Email}}</td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="3">No buyers found</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <!-- Раздел для продавцов -->
+        <h2>Sellers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Sellers}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.Username}}</td>
+                        <td>{{.Email}}</td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="3">No sellers found</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    {{template "admin-footer" .}} <!-- Шаблон для подвала -->
+</body>
+</html>

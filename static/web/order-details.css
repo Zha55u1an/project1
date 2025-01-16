@@ -1,0 +1,305 @@
+/* Общие стили */
+.container {
+    width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.order-info {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.items-table th, .items-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.items-table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Статус заказа */
+.order-status {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.status-steps {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.status-steps li {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    color: #ccc;
+    font-weight: bold;
+}
+
+.status-steps li.active {
+    color: #007BFF;
+}
+
+.status-steps li::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 100%;
+    height: 3px;
+    background-color: #ddd;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.status-steps li:last-child::after {
+    display: none;
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column; /* Располагаем товары в колонну */
+    gap: 15px; /* Отступ между карточками товаров */
+    margin-top: 20px;
+}
+
+.item-card {
+    display: flex;
+    flex-direction: row; /* Горизонтальная ориентация */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 100%; /* Занимает всю ширину */
+    max-width: 800px; /* Ограничение ширины */
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Растягиваем содержимое */
+    padding: 0 15px; /* Внутренние отступы */
+    flex: 1; /* Занимает доступное пространство */
+}
+
+.item-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+.item-name:hover {
+    text-decoration: underline;
+}
+
+.review-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    align-self: flex-end; /* Перемещаем кнопку вниз и вправо */
+    transition: background-color 0.3s ease;
+}
+
+.review-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Изображение товара */
+.item-image {
+    width: 120px; /* Ширина изображения */
+    height: 120px; /* Высота изображения */
+    object-fit: cover; /* Масштабирование изображения */
+}
+
+
+.back-button {
+    margin-bottom: 20px;
+    display: inline-block;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+/* Общий контейнер */
+.tracking-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin: 30px 0;
+    padding: 0 20px;
+}
+
+/* Линии между статусами */
+.step-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #f3f3f3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 24px;
+    color: #888;
+    border: 3px solid #ddd;
+    position: relative;
+    z-index: 2;
+}
+
+.step-icon.completed {
+    background-color: #007BFF;
+    color: white;
+    border-color: #007BFF;
+    transform: scale(1.1);
+}
+
+.completed-text {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.line {
+    flex: 1;
+    height: 4px;
+    background-color: #ddd;
+    position: relative;
+    z-index: 1;
+}
+
+.line.completed-line {
+    background-color: #007BFF;
+}
+
+
+/* Текст под иконкой */
+.tracking-step p {
+    margin: 10px 0 0;
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+}
+
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 400px;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.rating, .comment {
+    margin-bottom: 15px;
+}
+/* Стили для модала */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Звезды */
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.star {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    fill: #ddd; /* Неактивный цвет */
+    transition: fill 0.3s;
+}
+
+.star.filled {
+    fill: #f5b301; /* Цвет активных звезд */
+}
+

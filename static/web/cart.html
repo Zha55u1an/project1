@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/cart.css">
+</head>
+<body>
+    {{template "navbar" .}}
+    <div class="container">
+
+    <!-- Cart Items Section -->
+    <div class="cart-items">
+        <h2>Cart Items: {{len .CartItems}}</h2>
+        {{if .CartItems}}
+            {{range .CartItems}}
+                <div class="cart-item-container">
+                    <div class="cart-item">
+                        <img src="{{.Item.ImagePath}}" alt="{{.Item.Name}}">
+                        <div class="cart-item-details">
+                            <p class="cart-item-name">{{.Item.Name}}</p>
+                            <p class="cart-item-descrip">{{.Item.Description}}</p>
+                            <p class="cart-item-price">{{.Item.Price}}₸</p>
+                            <div class="cart-item-quantity">
+                                <button class="btn-decrease" onclick="updateQuantity({{ .Item.ID }}, -1)">-</button>
+                                <input type="number" class="quantity-input" id="quantity-{{ .Item.ID }}" value="{{.Quantity}}" 
+                                       onchange="setQuantity({{ .Item.ID }}, this.value)" min="1">
+                                <button class="btn-increase" onclick="updateQuantity({{ .Item.ID }}, 1)">+</button>
+
+                                <button class="btn-like" data-item-id="{{ .Item.ID }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="liked-icon1">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                      </svg>                                      
+                                </button>
+                                <button class="delete-button" onclick="removeFromCart({{ .Item.ID }})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="delete-icon">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                      </svg>                                      
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{end}}
+        {{else}}
+            <p>Your cart is empty.</p>
+        {{end}}
+    </div>
+    
+
+    <!-- Cart Summary Section -->
+    <div class="cart-summary">
+        <h3 class="summary-title">Cart Summary</h3>
+        <div class="summary-detail1">
+            <span>Total Items:</span> <span>{{len .CartItems}}</span>
+        </div>
+        <div class="summary-detail">
+            <span>Subtotal:</span>{{.TotalAmount}}₸
+        </div>
+        <div class="summary-total">
+            Total: {{.TotalAmount}}₸
+        </div>
+        <button class="checkout-button" onclick="window.location.href='/checkout?total={{.TotalAmount}}'">Checkout</button>
+    </div>
+
+</div>
+
+<div class="delivery-section">
+    <h2 id="delivery-title">Pickup address</h2>
+    <!-- Здесь динамически меняется кнопка -->
+    <button id="edit-address-btn" class="edit-button" style="display: none;" onclick="editDeliveryAddress()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="edit-icon">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+          </svg>              
+    </button>
+
+    <div id="delivery-button-container">
+        <a href="/map" class="btn-select-delivery" id="select-delivery-btn">Choose</a>
+    </div>
+    <p id="selected-address">Loading...</p>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    fetch('/api/get-delivery-address', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to load delivery address');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Формируем текст адреса
+        document.getElementById("delivery-title").innerText = "Choosen pickup address:";
+        const addressText = `${data.address_line}`;
+        document.getElementById('selected-address').textContent = addressText;
+
+        // Если адрес есть, скрываем кнопку "Выбрать" и показываем иконку карандаша
+        document.getElementById('select-delivery-btn').style.display = 'none';
+        document.getElementById('edit-address-btn').style.display = 'inline';
+    })
+    .catch(error => {
+        console.error('Error fetching delivery address:', error);
+
+        // Если адреса нет, показываем кнопку "Выбрать"
+        document.getElementById('select-delivery-btn').style.display = 'inline';
+        document.getElementById('edit-address-btn').style.display = 'none';
+        document.getElementById('selected-address').textContent = "Please, choose pickup address";
+    });
+});
+
+// Функция для редактирования адреса
+function editDeliveryAddress() {
+    window.location.href = "/map"; // Переход на страницу с картой для редактирования
+}
+
+    </script>
+
+<div class="recently-viewed">
+    <h2>Recently Viewed</h2>
+    {{if .RecentlyViewed}}
+
+    <div class="product-grid-container">
+        <button class="scroll-btn left" onclick="scrollProducts(-1)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+        </button>
+        
+        <div class="product-grid">
+            {{range .RecentlyViewed}}
+            <div class="product-card" data-item-id="{{.ID}}">
+                <button class="btn-like" data-item-id="{{.ID}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="liked-icon1 {{if index $.LikedMap .ID}}liked{{end}}">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+                    </button>
+                <img src="{{.ImagePath}}" alt="{{.Name}}" class="product-image">
+                <div class="product-details">
+                    <h3 class="price">{{.Price}}₸</h3>
+                    <div class="product-det">
+                        <p>{{.Name}} /</p>
+                    <p>{{.Description}}</p>
+                    </div>
+                </div>
+                <div class="product-icons">
+                    <button class="btn-rating">
+                        <!-- Иконка звезды для рейтинга -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="star-icon">
+                            <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <!-- Средний рейтинг -->
+                    <div class="average-rating">
+                        {{if .AverageRating}}
+                            <p>{{printf "%.1f" .AverageRating}} • </p>
+                        {{else}}
+                            <p>No reviews</p>
+                        {{end}}
+                    </div>
+                    <div class="rating-count">
+                        <span>{{if .ReviewCount}}{{.ReviewCount}} Reviews {{else}} {{end}}</span>
+                    </div>
+                </div>
+                <button class="btn-add-to-cart {{if index $.CartMap .ID}}in-cart{{end}}" data-item-id="{{.ID}}">
+                    {{if index $.CartMap .ID}}
+                        In Cart
+                    {{else}}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="to-cart-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                    </svg>
+                    {{end}}
+                </button>
+            </div>
+            {{end}}
+        </div>
+
+        <button class="scroll-btn right" onclick="scrollProducts(1)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </button>
+    </div>
+
+    {{else}}
+    <p>No recently viewed items.</p>
+    {{end}}
+</div>
+
+
+
+
+
+
+    {{template "footer" .}}
+    <script src="/static/script.js"></script>
+    <script src="/static/cart.js"></script>
+    <script src="/static/home.js"></script>
+</body>
+</html>

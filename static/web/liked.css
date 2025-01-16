@@ -1,0 +1,212 @@
+
+
+.products-grid {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Минимальная ширина карточки 240px */
+    gap: 30px; /* Расстояние между карточками */
+}
+
+
+
+.product-card {
+    margin: 0; /* Убираем внешние отступы */
+    padding: 0; /* Убираем внутренние отступы */
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* Позволяет изображению ровно вписаться в границы карточки */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 415px;
+    width: 227.2px;
+    position: relative;
+}
+
+
+.product-image {
+    width: 239px;
+    height: 318.26px; /* Устанавливаем фиксированную высоту, чтобы изображение занимало большую часть карточки */
+    object-fit: cover; /* Изображение будет полностью покрывать блок, сохраняя пропорции */
+    border-radius: 6px;
+}
+
+.product-details {
+    width: 238.7px;
+    height: 30px; /* Убираем фиксированную высоту */
+    padding: 0 8px;
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться друг под другом */
+    justify-content: flex-start; /* Выравнивание элементов сверху */
+    gap: 3px; /* Расстояние между элементами */
+    font-size: 0.85em; /* Уменьшенный шрифт */
+    white-space: nowrap; /* Запрет на перенос строк */
+    overflow: visible; /* Сделать переполнение видимым */
+    text-overflow: ellipsis; /* Добавляет троеточие, если текст не помещается */
+}
+.product-details .product-det {
+    display: flex;
+    align-items: center; /* Вертикальное выравнивание */
+    gap: 5px;
+}
+
+
+
+.product-card h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.product-card p {
+    margin: 0;
+    color: #555;
+}
+
+.btn-add-to-cart {
+    width: 238.7px;
+    height: 38px; /* Ширина кнопки на всю карточку */
+    background-color: #007BFF;
+    color: white;
+    padding: 12px 0;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #0056b3;
+}
+
+.to-cart-icon {
+    margin-right: 8px;
+    width: 25px;
+   
+}
+
+.in-cart {
+    background-color:  #0056b3; /* Зеленый цвет для статуса "в корзине" */
+    color: white;
+}
+
+.in-cart:hover {
+    background-color: #007BFF;
+}
+
+.in-cart .to-cart-icon {
+    display: none; /* Скрыть иконку, когда кнопка отображает "in cart" */
+}
+
+/* Кнопка "Нравится" */
+.btn-like {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Иконка "Нравится" внутри кнопки */
+.liked-icon1 {
+    width: 35px;
+    height: 35px;
+    stroke: #007BFF; /* Цвет контура */
+    fill: none; /* Без заливки по умолчанию */
+}
+.liked-icon1 :hover{
+    fill: #007BFF
+}
+
+.liked-icon1.liked {
+    fill: #007BFF; /* Цвет заливки при активации (например, синий) */
+}
+
+.product-icons {
+    display: flex;
+    margin-top: 10px;
+    padding: 0 8px; 
+    align-items: center;
+    gap: 5px;
+}
+
+.product-icons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.star-icon {
+    width: 18px;
+    height: 18px;
+    fill: #f18a00; /* Золотой цвет для звезды */
+    transition: fill 0.3s ease;
+}
+
+.star-icon:hover, .comment-icon:hover {
+    fill: #e67e22; /* Оранжевый цвет при наведении */
+}
+
+.btn-rating, .btn-comment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liked-icon1 {
+    width: 35px;
+    height: 35px;
+    stroke: #007BFF;
+    fill: #007BFF;
+}
+
+/* Стилизация контейнера уведомления */
+.notification {
+    position: fixed;
+    top: -50px; /* Скрыто за пределами экрана */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%);
+    background-color: #0056b3; /* Цвет успешного уведомления */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    z-index: 1000;
+    opacity: 0; /* По умолчанию скрыто */
+    display: flex; /* Для размещения текста и иконки в одну линию */
+    align-items: center; /* Центровка содержимого по вертикали */
+    gap: 10px; /* Расстояние между текстом и иконкой */
+    transition: top 0.3s ease, opacity 0.3s ease; /* Анимация */
+}
+
+/* Уведомление, когда оно показано */
+.notification.visible {
+    top: 60px; /* Позиция уведомления под хедером */
+    opacity: 1;
+}
+
+/* Уведомление, когда оно скрыто */
+.notification.hidden {
+    top: -50px;
+    opacity: 0;
+}
+
+/* Стили для иконки */
+.notification svg {
+    width: 24px;
+    height: 24px;
+    stroke: white; /* Цвет иконки */
+    stroke-width: 2;
+}
+

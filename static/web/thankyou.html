@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/thankyou.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container text-center mt-5">
+        <div class="card p-5">
+            <h1 class="text-success mb-4">Thank you for choosing us!</h1>
+            <p class="mb-4">You can track the status of your order in the section <a href="/my-orders">My Orders</a></p>
+            <a href="/home" class="btn btn-primary">Back to main page</a>
+        </div>
+    </div>
+    {{template "footer" .}}
+</body>
+</html>

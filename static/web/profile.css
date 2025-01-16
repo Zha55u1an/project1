@@ -1,0 +1,103 @@
+/* Общие стили для страницы профиля */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Заголовок страницы */
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 2em;
+    color: #333;
+}
+
+/* Стили для формы */
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для меток и полей ввода */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="phone"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    box-sizing: border-box; /* Чтобы учитывать паддинг в ширине */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="phone"]:focus {
+    outline: none;
+    border-color: #4CAF50; /* Цвет рамки при фокусе */
+}
+
+/* Кнопка сохранения */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для пустых или обязательных полей */
+input:invalid {
+    border-color: #f44336; /* Красная рамка для некорректных данных */
+}
+
+input:required {
+    background-color: #fff3e6; /* Светло-оранжевая подсветка обязательных полей */
+}
+
+/* Стили для сообщений */
+
+/* Стили для сообщений об ошибках и успехах */
+#profile-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 1.2em;
+    display: none;
+}
+
+#profile-message.success {
+    color: green;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+#profile-message.error {
+    color: green;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+

@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+
+p {
+    font-size: 16px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 5px #4caf50;
+}
+
+.btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+#resendMessage {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+#feedbackMessage {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#feedbackMessage.error {
+    color: red;
+}
+
+#feedbackMessage.success {
+    color: green;
+}

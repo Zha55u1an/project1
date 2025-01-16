@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Orders</title>
+    <link rel="stylesheet" href="/admin/static/admin-base.css">
+    <link rel="stylesheet" href="/admin/static/admin-order.css">
+</head>
+<body>
+    {{template "admin-navbar" .}} <!-- Шаблон для навигации -->
+
+    <div class="container">
+        <h1>Orders</h1>
+
+        <!-- Раздел для всех заказов -->
+        <h2>All Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User ID</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Orders}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.UserID}}</td>
+                        <td>{{.Status}}</td>
+                        <td>
+                            <ul>
+                                {{range .OrderItems}}
+                                    <li>{{.Item.Name}} (x{{.Quantity}}) - {{.Price}}₸</li>
+                                {{end}}
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="/admin/order-details/{{.ID}}" class="btn btn-info">View</a>
+                            <a href="/admin/order-update/{{.ID}}" class="btn btn-warning">Update Status</a>
+                        </td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="5">No orders found</td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    {{template "admin-footer" .}} <!-- Шаблон для подвала -->
+</body>
+</html>

@@ -1,0 +1,51 @@
+.orders-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.table-header, .table-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-header {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.table-row {
+    padding: 10px 0;
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+.table-row:nth-child(even) {
+    background-color: #f1f1f1; /* Полосатый фон для чётных строк */
+}
+
+.table-row:hover {
+    background-color: #f0f8ff;
+}
+
+.table-cell {
+    flex: 1;
+    text-align: center; /* Выравнивание по центру */
+    font-size: 1rem;
+    color: #333; /* Исправлен цвет текста */
+    padding: 5px 0;
+}

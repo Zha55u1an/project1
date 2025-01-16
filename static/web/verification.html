@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    {{template "navbar" .}}
+
+    <div class="container">
+        <h1>Verify Your Email</h1>
+        <p>We have sent a verification code to your email: <strong>{{.email}}</strong>.</p>
+        <p>Please check your inbox and enter the code below:</p>
+
+        <!-- Форма для ввода кода верификации -->
+        <form id="verifyForm">
+            <div class="form-group">
+                <label for="code">Verification Code:</label>
+                <input type="text" id="code" name="code" placeholder="Enter verification code" required />
+            </div>
+            <button type="submit" class="btn">Verify</button>
+        </form>
+
+        <!-- Сообщение и кнопка для повторной отправки кода -->
+        <p id="resendMessage">
+            Didn't receive the code? You can resend it in <span id="timer">15</span> seconds.
+        </p>
+        <button id="resendCode" disabled>Resend Code</button>
+
+        <!-- Сообщение об ошибках или успехе -->
+        <div id="feedbackMessage" class="message"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const email = "{{.email}}"; // Email передаётся из Go-шаблона
+            let timer = 15; // Таймер для повторной отправки кода
+            const resendButton = $("#resendCode");
+
+            // Функция запуска таймера
+            const startTimer = () => {
+                timer = 15;
+                resendButton.prop("disabled", true);
+                const interval = setInterval(() => {
+                    timer--;
+                    $("#timer").text(timer);
+
+                    if (timer <= 0) {
+                        clearInterval(interval);
+                        resendButton.prop("disabled", false);
+                        $("#resendMessage").text("Didn't receive the code? Click the button below to resend.");
+                    }
+                }, 1000);
+            };
+
+            // Запуск таймера при загрузке страницы
+            startTimer();
+
+            // Обработка отправки формы верификации
+           // Отправка данных через POST-запрос
+            $("#verifyForm").submit(function (e) {
+                e.preventDefault(); // Останавливаем стандартное поведение формы
+
+                const code = $("#code").val(); // Получаем введённый код
+                const email = "{{.email}}";    // Email из шаблона
+
+                // Отправляем запрос с правильным заголовком и JSON-данными
+                $.ajax({
+                    url: "/verification",
+                    method: "POST",
+                    contentType: "application/json", // Указываем тип контента
+                    data: JSON.stringify({ email: email, code: code }), // Преобразуем данные в JSON
+                    success: function (response) {
+                        if (response.error) {
+                            // Обработка ошибки
+                            $("#feedbackMessage").text(response.error).css("color", "red");
+                        } else {
+                            // Успешная верификация
+                            $("#feedbackMessage").text(response.message).css("color", "green");
+                            setTimeout(() => {
+                                window.location.href = response.redirect;
+                            }, 2000);
+                        }
+                    },
+                    error: function () {
+                        $("#feedbackMessage").text("Failed to verify the code. Please try again.").css("color", "red");
+                    },
+                });
+            });
+
+
+            // Обработка повторной отправки кода
+            resendButton.click(function () {
+                $.post("/resend-code", { email: email }, function (response) {
+                    if (response.message) {
+                        alert(response.message || "Code resent!");
+                        startTimer();
+                    }
+                }).fail(function () {
+                    alert("Failed to resend the code. Please try again.");
+                });
+            });
+        });
+    </script>
+
+    {{template "footer" .}}
+</body>
+</html>

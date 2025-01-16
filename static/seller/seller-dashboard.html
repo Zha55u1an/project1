@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/seller/static/seller-base.css">
+    <link rel="stylesheet" href="/seller/static/seller-dashboard.css">
+</head>
+<body>
+    {{template "seller-navbar"}}
+
+<div class="seller-container">
+    <h1>Seller Dashboard</h1>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Orders</h3>
+            <p>{{.TotalOrders}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Pending Orders</h3>
+            <p>{{.PendingOrders}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Completed Orders</h3>
+            <p>{{.CompletedOrders}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Products</h3>
+            <p>{{.TotalProducts}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <p>{{.TotalUsers}}</p>
+        </div>
+    </div>
+</div>
+
+{{template "seller-footer"}}
+
+</body>
+</html>

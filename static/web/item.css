@@ -1,0 +1,201 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.container {
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.item-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.item-page {
+    display: flex;
+    gap: 10px; /* Уменьшено расстояние между колонками */
+    align-items: flex-start;
+}
+
+/* Левый контейнер: Миниатюры */
+.left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 550px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.thumbnail:hover {
+    border: 5px solid #007bff;
+    /* transform: scale(1.05); */
+}
+
+/* Добавляем стили для скроллбара */
+.left-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.left-container::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.left-container::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+/* Правый контейнер: Главное изображение */
+.right-container {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin-left: 5px; /* Ещё немного сокращаем расстояние */
+}
+
+.main-image-container {
+    max-width: 400px;
+    max-height: 400px;
+    text-align: center;
+}
+
+.main-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+    border: 2px solid #ddd;
+    /* object-fit: contain; */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Информация о товаре */
+.item-details {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+}
+
+.item-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.item-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.btn-add-to-cart {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #218838;
+}
+
+/* Средний рейтинг */
+.average-rating {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 100px;
+    color: black;
+    font-weight: bold;
+}
+
+/* Контейнер для отзывов */
+.reviews-container {
+    margin-top: 30px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+
+.review-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.review-rating {
+    color: #ff9800;
+    font-size: 1.2rem;
+}
+
+.review-comment {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+.review-card {
+    position: relative; /* Устанавливаем контейнер как родитель для абсолютного позиционирования */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.rating-stars {
+    position: absolute; /* Абсолютное позиционирование */
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    display: flex; /* Чтобы звезды располагались в ряд */
+}
+
+.star {
+    font-size: 20px;
+    color: #ddd; /* Светлый цвет для пустых звезд */
+    margin-right: 5px;
+}
+
+.star.filled {
+    color: #ff9800; /* Золотой цвет для заполненных звезд */
+}
+

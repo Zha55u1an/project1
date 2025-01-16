@@ -1,0 +1,111 @@
+/* login.css */
+.login-section {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background-color: #0056b3;
+}
+
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.password-field {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password svg {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+.toggle-password:hover svg {
+    color: #007BFF;
+}
+
+.forgot-password-container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.forgot-password-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.forgot-password-container .form-group {
+    margin-bottom: 15px;
+}
+
+.forgot-password-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.forgot-password-container p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+.forgot-password-link {
+    font-size: 12px; /* Уменьшаем размер шрифта */
+    color: #007bff; /* Синий цвет ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block; /* Позволяет сдвиг */
+    margin-left: -10px; /* Сдвиг текста влево */
+    cursor: pointer; /* Указывает, что элемент кликабельный */
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}

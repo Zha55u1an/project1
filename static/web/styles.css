@@ -1,0 +1,413 @@
+/* Убедитесь, что body и html занимают всю высоту */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Контейнер для всего контента страницы */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Чтобы футер всегда находился внизу */
+    background-color: #f9f9f9; /* Light Gray background */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Основной контент страницы будет заполнять пространство */
+main {
+    flex-grow: 1; /* Позволяет этому элементу занимать оставшееся пространство */
+}
+
+/* Шапка сайта */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4169E1; /* Royal Blue */
+    padding: 0px 50px; /* Сужаем шапку и добавляем внутренний отступ */
+    color: white;
+}
+
+.header-address:hover{
+    background-color: #0056b3;
+    transition: stroke 0.2s;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.0em; /* Уменьшенный размер текста */
+    font-weight: bold; /* Более жирный текст */
+}
+
+.menu-icon {
+    display: block;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.menu-icon div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+.search-container {
+    display: flex; /* Для горизонтального выравнивания */
+    align-items: center; /* Центрирование кнопки по вертикали */
+    background-color: white; /* Фон поля поиска */
+    border-radius: 20px; /* Закругленные углы */
+    padding: 5px 10px; /* Внутренний отступ */
+    width: 800px; /* Ширина поисковой строки */
+    margin: 0 auto; /* Центрирование на странице */
+    height: 40px;
+}
+
+.search-container input {
+    border: none; /* Убираем рамку */
+    outline: none; /* Убираем обводку */
+    flex: 1; /* Заполнение оставшегося пространства */
+    font-size: 16px; /* Размер текста */
+}
+
+
+
+
+
+
+.search-container input[type="text"] {
+    padding: 10px;
+    width: 350px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+/* Стили для кнопки */
+button.search {
+    background-color: white; /* Цвет кнопки */
+
+    display: flex; /* Для центрирования иконки внутри кнопки */
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* Ширина кнопки */
+    height: 50px; /* Высота кнопки */
+    border: none; /* Убираем рамку */
+    cursor: pointer; /* Курсор-указатель при наведении */
+}
+
+/* Стили для иконки */
+button.search .search-icon {
+    width: 24px; /* Размер иконки */
+    height: 24px;
+    stroke: #007BFF;/* Цвет линии иконки */
+    transition: stroke 0.2s; /* Анимация изменения цвета линии */
+}
+
+.search-icon:hover {
+    stroke: #4169E1;/* Цвет линии иконки */
+    transition: stroke 0.2s; /* Анимация изменения цвета линии */
+}
+
+/* Эффект при наведении */
+
+
+/* Эффект при нажатии */
+button.search:active {
+    transform: scale(0.95); /* Лёгкое уменьшение */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Более глубокая тень */
+}
+
+/* Стили для иконки при наведении на кнопку */
+button.search:hover .search-icon {
+    stroke: #e0e0e0; /* Светло-серый цвет линии */
+}
+
+/* Футер фиксируется внизу */
+footer {
+    background-color: #4169E1; /* Royal Blue */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%; /* Полная ширина футера */
+    position: relative;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Адаптивные стили для маленьких экранов */
+@media screen and (max-width: 768px) {
+    .products {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Кнопка для входа */
+.login-button {
+    background: none; /* Убираем фон кнопки */
+    border: 2px solid #4169E1; /* Зеленая рамка */
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 40px; /* Фиксированная ширина кнопки */
+    height: 40px; /* Фиксированная высота кнопки */
+}
+
+/* Иконка для кнопки входа */
+.login-icon {
+    width: 35px;
+    height: 35px;
+    fill: none; /* Убираем внутреннее заполнение */
+    stroke-width: 1.5; /* Толщина обводки */
+    stroke: white; /* Белая обводка по умолчанию */
+}
+
+/* Эффект при наведении */
+.login-button:hover .login-icon {
+    fill: white;
+}
+.login-button:hover .dropdown-menu {
+    display: block; /* Показывать меню при наведении */
+}
+
+
+
+/* cart icon */
+.cart-button {
+    background: none; /* Убираем фон кнопки */
+    border: 2px solid #4169E1; /* Зеленая рамка */
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 40px; /* Фиксированная ширина кнопки */
+    height: 40px; /* Фиксированная высота кнопки */
+}
+
+/* Иконка для кнопки входа */
+.cart-icon {
+    width: 35px;
+    height: 35px;
+    fill: none; /* Убираем внутреннее заполнение */
+    stroke-width: 1.5; /* Толщина обводки */
+    stroke: white; /* Белая обводка по умолчанию */
+}
+
+/* Эффект при наведении */
+.cart-button:hover .cart-icon {
+    fill: white;
+}
+
+
+
+/* liked icon */
+.liked-button {
+    background: none; /* Убираем фон кнопки */
+    border: 2px solid #4169E1; /* Зеленая рамка */
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 40px; /* Фиксированная ширина кнопки */
+    height: 40px; /* Фиксированная высота кнопки */
+}
+
+/* Иконка для кнопки входа */
+.liked-icon {
+    width: 35px;
+    height: 35px;
+    fill: none; /* Убираем внутреннее заполнение */
+    stroke-width: 1.5; /* Толщина обводки */
+    stroke: white; /* Белая обводка по умолчанию */
+}
+
+/* Эффект при наведении */
+.liked-button:hover .liked-icon {
+    fill: white;
+}
+
+
+/* Стили для всплывающего меню */
+.dropdown-menu {
+    display: none;
+    position: absolute; /* Чтобы меню располагалось поверх */
+    padding: 10px;
+    z-index: 1000;
+    background-color: #ffffff; /* Белый фон */
+    border: 1px solid #ddd; /* Тонкая светлая рамка */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    min-width: 200px; /* Минимальная ширина меню */
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+.dropdown-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu ul li {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu ul li:hover {
+    background-color: #f9f9f9;
+}
+
+/* Стили для гамбургер-меню */
+/* Стили для гамбургер-меню */
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    margin-left: 100px;
+    transition: transform 0.3s ease; /* Плавное изменение при анимации */
+}
+
+.hamburger-line {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    border-radius: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Плавное изменение при анимации */
+}
+
+/* Когда меню активное (когда нажали на гамбургер) */
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: translateY(10px) rotate(45deg); /* Верхняя линия поворачивается и сдвигается вниз */
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0; /* Средняя линия исчезает */
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg); /* Нижняя линия поворачивается и сдвигается вверх */
+}
+
+
+/* Стили для бокового меню */
+.side-menu {
+    position: fixed;
+    top: 100px; /* Меню будет начинаться под хедером */
+    left: -250px; /* Меню скрыто за экраном */
+    width: 250px;
+    height: 100%;
+    background-color: #f9f9f9; /* Royal Blue */
+    padding-top: 60px; /* Отступ сверху */
+    transition: 0.3s; /* Анимация появления */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Меню поверх остальных элементов */
+    border-radius: 20px;
+}
+
+/* Стили для затемненной части экрана */
+.overlay {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Полупрозрачный черный фон */
+    display: none; /* Скрыто по умолчанию */
+    z-index: 999; /* Overlay будет под меню, но поверх контента */
+}
+
+/* Стили для карточек товаров */
+.main-content {
+    position: relative;
+    z-index: 1; /* Карточки товаров будут на более низком уровне */
+}
+
+.side-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 15px 20px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.side-menu ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+.side-menu ul li:hover {
+    background-color: gray /* Темный фон при наведении */
+}
+
+/* Когда меню открыто */
+.side-menu.open {
+    left: 0;
+}
+
+/* Когда overlay видимый */
+.overlay.open {
+    display: block;
+}
+
+
+
+
+/* Стили для хедера */
+.header-container {
+    display: flex;
+    flex-direction: column; /* Размещение элементов по вертикали */
+    align-items: center;
+    justify-content: center;
+    background-color: #4169E1; /* Royal Blue */
+    padding: 10px 20px;
+    color: white;
+}
+
+.header-address {
+    font-size: 12px; /* Маленький размер шрифта для адреса */
+    margin-bottom: 8px; /* Отступ снизу */
+}
+
+.header-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.header-links a:hover {
+    text-decoration: underline;
+}
